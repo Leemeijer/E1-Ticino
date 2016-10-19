@@ -5,6 +5,15 @@ var
     cycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
     transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    
+    stamenTerrain =
+    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    
+    stamenToner =
+    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    
+    stamenWatercolor =
+    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
 
     ZW07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
     ZW02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
@@ -39,15 +48,21 @@ var
                         [44.991221, 8.1672119140625],
                         [44.991221, 9.698682], 
                         [46.050361, 9.698682] ]
-    }).setView([45.654464,  9.164932], 10);
+    }).setView([45.654464,  9.164932], 9);
 //Opmerking: Zoomcontrol: false zorgt er hier voor dat het (standaard?) in- en uitzoom knopje uit staat. Zoomcontrol is hieronder weer aan gezet. Als je Zoomcontrol weg haalt staat deze er dus wel.
 
+var Esri = L.esri.basemapLayer('Topographic');
+//Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
 //Variabelen voor het lagen menu
     var kaarten = {
-    "OSM Basic"     : osm,
-    "OSM Cycle"     : cycle,
-    "OSM Transport" : transport
+    "OSM Basic"         : osm,
+    "OSM Cycle"         : cycle,
+    "OSM Transport"     : transport,
+    "Stamen Terrain"    : stamenTerrain,
+    "Stamen Toner"      : stamenToner,
+    "Stamen Watercolor" : stamenWatercolor,
+    "Esri Topographic"  : Esri
     };
 
     var overlays = {

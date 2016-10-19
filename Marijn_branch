@@ -1,0 +1,25 @@
+//Variabelen voor het lagen menu
+    var kaarten = {
+      "OpenStreetMap"  : osm};
+
+    var overlays = {
+        "E1, grens - Zerbolo"        : WebE1,
+        "E1, Zerbolo - vervolg"      : Zerbolo,
+        
+        "E1 alternatief, Zerbolo - Pavia" : ZerPav,
+        "E1 alternatief, Pavia - vervolg"    : E1vervolg,
+  
+        
+        "Swiss fragment"   : Zwits,
+        "Swiss 07"                   : ZW07,
+        "Swiss 02"                   : ZW02,
+
+        "Veerpont in de E1"    : Veerpont,
+        "Veerpont overig"      : VeerpontO,
+        
+        "Vraag"         : Vraag,
+        "Onverkend"     : Onverkend
+        
+        
+        
+    };

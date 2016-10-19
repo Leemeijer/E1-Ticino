@@ -1,6 +1,10 @@
 //Vaiabelen maken voor je achtergron en GeoJSON
 var
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 5, maxZoom: 22, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    
+    cycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    
+    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
 
     ZW07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
     ZW02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
@@ -41,7 +45,10 @@ var
 
 //Variabelen voor het lagen menu
     var kaarten = {
-      "OpenStreetMap"  : osm};
+    "OSM Basic"     : osm,
+    "OSM Cycle"     : cycle,
+    "OSM Transport" : transport
+    };
 
     var overlays = {
         "07"            : ZW07,

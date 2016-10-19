@@ -1,0 +1,39 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "feature01"
+        "desc": "Hoofdroute extra stukje",
+        "url" : "eventuele website",
+        "color": "fuchsia",
+        "opacity": "0.8"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [xx coordinaat, coordinaat]
+        } }
+ 
+
+
+
+
+
+       
+{
+      "type": "Feature",
+      "properties": {
+        "name": "feature02",
+        "desc": "Hoofdroute hoofdgedeelte",
+        "url" : "eventuele website",
+        "color": "fuchsia",
+        "opacity": "0.8"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [xx coordinaat, coordinaat]
+        } }
+        
+    ]
+}

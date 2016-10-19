@@ -1,4 +1,4 @@
-//Vaiabelen maken voor je achtergron en GeoJSON
+//Achtergrond kaarten:
 var
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 5, maxZoom: 22, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
@@ -15,33 +15,38 @@ var
     stamenWatercolor =
     L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
 
-    ZW07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
-    ZW02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
-    E1vervolg = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Vervolg E1 richting Rome"),
-    Veerpont = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Veerpont Zwitserland - Italië"),
-    VeerpontO = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Veerpont Overig"),
-    Onverkend = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Onverkende E1 route"),
-    Zerbolo = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("E1, Zerbolo-Zuiden"),
-    ZerPav = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("E1, Zerbolo-Pavia"),
-    Zwits = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Zwitserland?"),
-    Vraag = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Lokale varianten, vraag 03?"),
-    WebE1 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("E1 van internet");
+//Variabelen van de routes:
+    HoofdrouteZerbolo = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup('<a target="_blank" href="https://github.com/Leemeijer/Webmap-Bart/tree/master">Github Bart</a>'),
+    HoofdrouteVervolg = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Hoofdroute E1. Vervolg vanaf Zerbolo"),
+    Alternatief = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Alternatieve route van de E1 richting Pavia"),
+    LokaleVariant = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Lokale varianten vanuit papieren kaarten ter plekke"),
+    VariantVraag = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Vraag: Zijn deze lokale varianten de moeite waard?"),
+    Aanbevolen = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Deel van de E1, gelopen door Bosma"),
+    Swiss02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
+    Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland");
 
-    jQuery.getJSON("GeoJson/Swiss07.geojson", function (data) { ZW07.addData(data)}),
-    jQuery.getJSON("GeoJson/Swiss02.geojson", function (data) { ZW02.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_web_Pavia_vervolg.geojson", function (data) { E1vervolg.addData(data)}),
-    jQuery.getJSON("GeoJson/Veerpont_E1.geojson", function (data) { Veerpont.addData(data)}),
-    jQuery.getJSON("GeoJson/Veerpont_Overig.geojson", function (data) { VeerpontO.addData(data)}),
-    jQuery.getJSON("GeoJson/Bosma_Onverkend.geojson", function (data) { Onverkend.addData(data)}),
-    jQuery.getJSON("GeoJson/Zerbolo-Zuiden.geojson", function (data) { Zerbolo.addData(data)}),
-    jQuery.getJSON("GeoJson/Zerbolo-Pavia.geojson", function (data) { ZerPav.addData(data)}),
-    jQuery.getJSON("GeoJson/Zwitserland.geojson", function (data) { Zwits.addData(data)}),
-        jQuery.getJSON("GeoJson/E1_lokale_variant_03.geojson", function (data) { Vraag.addData(data)}),
-    jQuery.getJSON("GeoJson/WebE1.geojson", function (data) { WebE1.addData(data)});
+    
+//Variabelen van de Points of Interest:
+    Stations = L.geoJson(null, {style: {iconUrl : 'images/station.png'}, onEachFeature:onEachFeature}),
+    Bruggen = L.geoJson(null, {style: {iconUrl : 'images/station.png'}, onEachFeature:onEachFeature});
+
+//GeoJson van de routes:
+    jQuery.getJSON("GeoJson/E1_hoofdroute_grens_Zerbolo.geojson", function (data) { HoofdrouteZerbolo.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_hoofdroute_Zerbolo_vervolg.geojson", function (data) { HoofdrouteVervolg.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_alternatief_Zerbolo_Pavia_vervolg.geojson", function (data) { Alternatief.addData(data)}),  
+    jQuery.getJSON("GeoJson/E1_lokale_varianten.geojson", function (data) { LokaleVariant.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_lokale_variant_vraag.geojson", function (data) { VariantVraag.addData(data)}),
+    jQuery.getJSON("GeoJson/Bosma_aanbevolen_deels_verkend.geojson", function (data) { Aanbevolen.addData(data)}),
+    jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
+    jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)});
 
         
+//GeoJson van de Points of Interest:
+    jQuery.getJSON("GeoJson/POI_stations_langs_route.geojson", function (data) { Stations.addData(data)}),
+    jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)});
 
-//maak je map en geef aan welke lagen er in moeten
+        
+//Map + layers + attributen
     var map = L.map('map', {layers: [osm], zoomControl: false, 
             minZoom: 10,
             maxBounds: [[46.050361, 8.1672119140625],
@@ -54,7 +59,9 @@ var
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
+
 //Variabelen voor het lagen menu
+//Achtergrond kaarten:
     var kaarten = {
     "OSM Basic"         : osm,
     "OSM Cycle"         : cycle,
@@ -65,27 +72,28 @@ var Esri = L.esri.basemapLayer('Topographic');
     "Esri Topographic"  : Esri
     };
 
-    var overlays = {
-        "07"            : ZW07,
-        "02"            : ZW02,
-        "E1 Vervolg"    : E1vervolg,
-        "VeerpontE1"    : Veerpont,
-        "Veerpont"      : VeerpontO,
-        "Onverkend"     : Onverkend,
-        "E1 - Zerbolo"  : WebE1,
-        "Zerbolo-Zuiden": Zerbolo,
-        "Zerbolo-Pavia" : ZerPav,
-        "Zwitserland"   : Zwits,
-        "Vraag"         : Vraag
+//Routes:
+    var routes = {
+    "Hoofdroute E1 - Zerbolo"   : HoofdrouteZerbolo,
+    "Vervolg Hoofdroute"        : HoofdrouteVervolg,
+    "Alternatieve route"        : Alternatief,
+    "Lokale Varianten"          : LokaleVariant,
+    "Test Varianten"            : VariantVraag,
+    "Aanbevolen E1 door Bosma"  : Aanbevolen,
+    "Zwitserse Wandelroute 07"  : Swiss07,
+    "Zwitserse Wandelroute 02"  : Swiss02,
+    "Station"                   : Stations,
+    "Bruggen"                   : Bruggen
     };
 
-        //plus en min knoppen
+
+//Plus en min knoppen
     L.control.zoom().addTo(map);
 
-        //lagen menu
-    L.control.layers(kaarten, overlays).addTo(map);
+//Lagen menu
+    L.control.layers(kaarten, routes).addTo(map);
 
-    // functies
+//Functies
     function style(feature) {
         return {
             color   : feature.properties.color,
@@ -95,15 +103,21 @@ var Esri = L.esri.basemapLayer('Topographic');
 
     function onEachFeature(feature, layer) {layer.on({})};
 
+//Titel:
+var titelIcon = L.icon ({
+        iconUrl: 'images/E1_ticino_title_up01_rgb[301].png',
+        iconSize: [500, 109],
+        iconAnchor: [0,0]
+     });
 
+    L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
 
-//eigen icoon
+//Eigen icoon
 var testIcon = L.icon ({
         iconUrl: 'images/gevaar.png',
         iconSize: [25, 25],
         iconAnchor: [0,0]
-        
-    });
+     });
 
     L.marker([45.342898, 8.880618], {icon: testIcon}).addTo(map).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
@@ -111,3 +125,4 @@ var testIcon = L.icon ({
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
    
+

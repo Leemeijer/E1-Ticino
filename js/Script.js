@@ -61,10 +61,15 @@ var
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
+//Plus en min knoppen
+    L.control.zoom().addTo(map);
 
 //Variabelen voor het lagen menu
 //Achtergrond kaarten:
-    var kaarten = {
+    var kaarten = [{
+        groupName:  "achtergrondkaarten",
+        expanded: true,
+        layers: {
     "OSM Basic"         : osm,
     "OSM Cycle"         : cycle,
     "OSM Transport"     : transport,
@@ -72,10 +77,14 @@ var Esri = L.esri.basemapLayer('Topographic');
     "Stamen Toner"      : stamenToner,
     "Stamen Watercolor" : stamenWatercolor,
     "Esri Topographic"  : Esri
-    };
+    }}];
 
 //Routes:
-    var routes = {
+    var routes = [
+                    {
+                        groupName: "routes",
+                        expanded: true,
+                        layers: {
     "Hoofdroute E1 - Zerbolo"   : HoofdrouteZerbolo,
     "Vervolg Hoofdroute"        : HoofdrouteVervolg,
     "Alternatieve route"        : Alternatief,
@@ -84,17 +93,19 @@ var Esri = L.esri.basemapLayer('Topographic');
     "Aanbevolen E1 door Bosma"  : Aanbevolen,
     "Zwitserse Wandelroute 07"  : Swiss07,
     "Zwitserse Wandelroute 02"  : Swiss02,
-    "Station"                   : Stations,
-    "Bruggen"                   : Bruggen,
     "Via Francigena"            : ViaF
-    };
+    }},
+        {
+            groupName: "punten",
+            expanded: true,
+            layers: {
+    "Bruggen"                   : Bruggen,
+    "Stations"                  : Stations
+    }}];
 
-
-//Plus en min knoppen
-    L.control.zoom().addTo(map);
 
 //Lagen menu
-    L.control.layers(kaarten, routes).addTo(map);
+    var control= L.Control.styledLayerControl(kaarten, routes).addTo(map);
 
 //Functies
     function style(feature) {

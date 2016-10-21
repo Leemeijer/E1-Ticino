@@ -1,6 +1,6 @@
 //Achtergrond kaarten:
 var
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 5, maxZoom: 22, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
     cycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
@@ -23,12 +23,13 @@ var
     VariantVraag = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Vraag: Zijn deze lokale varianten de moeite waard?"),
     Aanbevolen = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Deel van de E1, gelopen door Bosma"),
     Swiss02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
-    Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland");
+    Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
+    ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Via Francigena");
 
     
 //Variabelen van de Points of Interest:
     Stations = L.geoJson(null, {style: {iconUrl : 'images/station.png'}, onEachFeature:onEachFeature}),
-    Bruggen = L.geoJson(null, {style: {iconUrl : 'images/station.png'}, onEachFeature:onEachFeature});
+    Bruggen = L.geoJson(null);
 
 //GeoJson van de routes:
     jQuery.getJSON("GeoJson/E1_hoofdroute_grens_Zerbolo.geojson", function (data) { HoofdrouteZerbolo.addData(data)}),
@@ -38,7 +39,8 @@ var
     jQuery.getJSON("GeoJson/E1_lokale_variant_vraag.geojson", function (data) { VariantVraag.addData(data)}),
     jQuery.getJSON("GeoJson/Bosma_aanbevolen_deels_verkend.geojson", function (data) { Aanbevolen.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
-    jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)});
+    jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
+    jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)});
 
         
 //GeoJson van de Points of Interest:
@@ -48,12 +50,12 @@ var
         
 //Map + layers + attributen
     var map = L.map('map', {layers: [osm], zoomControl: false, 
-            minZoom: 10,
+            minZoom: 8,
             maxBounds: [[46.050361, 8.1672119140625],
                         [44.991221, 8.1672119140625],
                         [44.991221, 9.698682], 
                         [46.050361, 9.698682] ]
-    }).setView([45.654464,  9.164932], 9);
+    }).setView([45.654464,  9.164932], 10);
 //Opmerking: Zoomcontrol: false zorgt er hier voor dat het (standaard?) in- en uitzoom knopje uit staat. Zoomcontrol is hieronder weer aan gezet. Als je Zoomcontrol weg haalt staat deze er dus wel.
 
 var Esri = L.esri.basemapLayer('Topographic');
@@ -83,7 +85,8 @@ var Esri = L.esri.basemapLayer('Topographic');
     "Zwitserse Wandelroute 07"  : Swiss07,
     "Zwitserse Wandelroute 02"  : Swiss02,
     "Station"                   : Stations,
-    "Bruggen"                   : Bruggen
+    "Bruggen"                   : Bruggen,
+    "Via Francigena"            : ViaF
     };
 
 
@@ -97,7 +100,8 @@ var Esri = L.esri.basemapLayer('Topographic');
     function style(feature) {
         return {
             color   : feature.properties.color,
-            opacity : feature.properties.opacity
+            opacity : feature.properties.opacity,
+            icon    : titelIcon
         };
     }
 
@@ -113,13 +117,13 @@ var titelIcon = L.icon ({
     L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
 
 //Eigen icoon
-var testIcon = L.icon ({
+var gevaar = L.icon ({
         iconUrl: 'images/gevaar.png',
         iconSize: [25, 25],
         iconAnchor: [0,0]
      });
 
-    L.marker([45.342898, 8.880618], {icon: testIcon}).addTo(map).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+    L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
 //popup marker leaflet
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);

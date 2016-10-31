@@ -18,31 +18,25 @@ var
 
 //Variabelen van de routes:
     
-    HoofdrouteZerbolo = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup('<a target="_blank" href="https://github.com/Leemeijer/Webmap-Bart/tree/master">Github Bart</a>'),
-    HoofdrouteVervolg = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Hoofdroute E1. Vervolg vanaf Zerbolo"),
-    Alternatief = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Alternatieve route van de E1 richting Pavia"),
+    Hoofdroute = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup('<a target="_blank" href="https://github.com/Leemeijer/Webmap-Bart/tree/master">Github Bart</a>'),
     LokaleVariant = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Lokale varianten vanuit papieren kaarten ter plekke"),
-    VariantVraag = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Vraag: Zijn deze lokale varianten de moeite waard?"),
-    Aanbevolen = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Deel van de E1, gelopen door Bosma"),
     Swiss02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
     Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
-    ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Via Francigena");
-var geoJson = L.layerGroup([HoofdrouteZerbolo, HoofdrouteVervolg, Alternatief, LokaleVariant, VariantVraag, Aanbevolen, Swiss02, Swiss07, ViaF]);
+    ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Via Francigena"),
+    Aanbevolen = L.geoJson(null, {style:style}).bindPopup("Deel van de E1, gelopen door Bosma");
+
     
 //Variabelen van de Points of Interest:
-    Stations = L.geoJson(null, {style: {iconUrl : 'images/station.png'}, onEachFeature:onEachFeature}),
+    Stations = L.geoJson(null),
     Bruggen = L.geoJson(null);
 
 //GeoJson van de routes:
-    jQuery.getJSON("GeoJson/E1_hoofdroute_grens_Zerbolo.geojson", function (data) { HoofdrouteZerbolo.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_hoofdroute_Zerbolo_vervolg.geojson", function (data) { HoofdrouteVervolg.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_alternatief_Zerbolo_Pavia_vervolg.geojson", function (data) { Alternatief.addData(data)}),  
+    jQuery.getJSON("GeoJson/E1_hoofdroute_italie.geojson", function (data) { Hoofdroute.addData(data)}),
     jQuery.getJSON("GeoJson/E1_lokale_varianten.geojson", function (data) { LokaleVariant.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_lokale_variant_vraag.geojson", function (data) { VariantVraag.addData(data)}),
-    jQuery.getJSON("GeoJson/Bosma_aanbevolen_deels_verkend.geojson", function (data) { Aanbevolen.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
-    jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)});
+    jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)}),
+    jQuery.getJSON("GeoJson/Bosma_aanbevolen.geojson", function (data) { Aanbevolen.addData(data)});
 
         
 //GeoJson van de Points of Interest:
@@ -52,8 +46,8 @@ var geoJson = L.layerGroup([HoofdrouteZerbolo, HoofdrouteVervolg, Alternatief, L
 //__________________________________________________________________________________________________________________      
                                         //Maken van de kaart:
 //Map + layers + attributen
-    var map = L.map('map', {layers: [osm, HoofdrouteZerbolo, Aanbevolen], 
-            minZoom: 8,
+    var map = L.map('map', {layers: [osm, Hoofdroute], 
+            minZoom: 9,
             maxBounds: [[46.050361, 8.1672119140625],
                         [44.991221, 8.1672119140625],
                         [44.991221, 9.698682], 
@@ -89,15 +83,12 @@ var Esri = L.esri.basemapLayer('Topographic');
                     groupName: "Routes",
                     expanded: true,
                     layers: {
-            "Hoofdroute E1 - Zerbolo"   : HoofdrouteZerbolo,
-            "Vervolg Hoofdroute"        : HoofdrouteVervolg,
-            "Alternatieve route"        : Alternatief,
-            "Lokale Varianten"          : LokaleVariant,
-            "Test Varianten"            : VariantVraag,
-            "Aanbevolen E1 door Bosma"  : Aanbevolen,
-            "Zwitserse Wandelroute 07"  : Swiss07,
-            "Zwitserse Wandelroute 02"  : Swiss02,
-            "Via Francigena"            : ViaF
+            "E1 Hiking Trail"           : Hoofdroute,
+            "E1 Local Alternatives"     : LokaleVariant,
+            "Swiss 2: Trans Swiss Trail": Swiss02,
+            "Swiss 7: Via Gottardo"     : Swiss07,
+            "Via Francigena"            : ViaF,
+            "Recommended"               : Aanbevolen
             }
         },
         
@@ -117,22 +108,26 @@ var Esri = L.esri.basemapLayer('Topographic');
 
 //__________________________________________________________________________________________________________________  
                                         //Functies maken (stijl en mouseover):
+
 //Functies
     function style(feature) {
         return {
             color   : feature.properties.color,
-            opacity : feature.properties.opacity
+            opacity : feature.properties.opacity,
+            weight: feature.properties.weight,
+            dashArray: feature.properties.dashArray,
+            lineCap: feature.properties.lineCap
         };
     };
 
+    
 function highlightFeature(e) {
     var layer = e.target;
 
     layer.setStyle({
         weight: 10,
-        color: '#e8fc00',
-        dashArray: '',
-        fillOpacity: 0.85
+        color: '#0af2fc',
+        opacity: 0.5
     });
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -141,7 +136,7 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-    HoofdrouteZerbolo.resetStyle(e.target);
+    Aanbevolen.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {

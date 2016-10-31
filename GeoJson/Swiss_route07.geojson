@@ -7,8 +7,11 @@
         "name": "Swiss07",
         "desc": "Route 7 vanuit Zwitserland",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
-        "color": "red",
-        "opacity": "0.7"
+        "color": "#007400",
+        "opacity": "0.7",
+	"weight": 2,
+	"dashArray": "8",
+	"lineCap": "square"
       },
       "geometry": {
         "type": "LineString",

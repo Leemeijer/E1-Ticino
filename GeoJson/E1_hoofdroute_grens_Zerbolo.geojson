@@ -7,7 +7,7 @@
         "name": "feature01",
         "desc": "Hoofdroute extra stukje",
         "url" : "mogelijke website",
-        "color": "fuchsia",
+        "color": "#a80000",
         "opacity": "0.8"
       },
       "geometry": {

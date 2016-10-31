@@ -7,7 +7,7 @@
         "name": "Zerbolo-vervolg",
         "desc": "Hoofdroute E1. Vervolg vanaf Zerbolo",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
-        "color": "fuchsia",
+        "color": "#a80000",
         "opacity": "0.8"
       },
       "geometry": {

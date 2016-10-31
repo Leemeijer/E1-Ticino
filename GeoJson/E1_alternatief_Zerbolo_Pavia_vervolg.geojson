@@ -8,7 +8,8 @@
         "desc": "Alternatieve route van de E1 richting Pavia",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
         "color": "fuchsia",
-        "opacity": "0.8"
+        "opacity": "#a80000",
+	"dasharray": "5"
       },
       "geometry": {
         "type": "LineString",

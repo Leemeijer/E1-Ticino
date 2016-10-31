@@ -7,8 +7,8 @@
         "name": "Bosma verkende stuken E1 route",
         "desc": "Deel van de E1, gelopen door Bosma",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
-        "color": "fuchsia",
-        "opacity": "0.8"
+        "color": "#ffff00",
+        "opacity": "0.6"
       },
       "geometry": {
         "type": "LineString",
@@ -24,8 +24,8 @@
         "name": "Bosma verkende stuken E1 route",
         "desc": "Deel van de E1, gelopen door Bosma",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
-        "color": "fuchsia",
-        "opacity": "0.8"
+        "color": "#17d817",
+        "opacity": "0.6"
       },
       "geometry": {
         "type": "LineString",
@@ -41,8 +41,8 @@
         "name": "Bosma verkende stuken E1 route",
         "desc": "Deel van de E1, gelopen door Bosma",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
-        "color": "fuchsia",
-        "opacity": "0.8"
+        "color": "#17d817",
+        "opacity": "0.6"
       },
       "geometry": {
         "type": "LineString",

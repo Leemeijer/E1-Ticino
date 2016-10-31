@@ -165,8 +165,8 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
             this._expand();
         }
 
-        this._baseLayersList = L.DomUtil.create('div', className + '-base', form);
         this._overlaysList = L.DomUtil.create('div', className + '-overlays', form);
+        this._baseLayersList = L.DomUtil.create('div', className + '-base', form);
 
         container.appendChild(section);
 
@@ -232,6 +232,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
                 name: group.groupName,
                 id: groupId,
                 expanded: group.expanded
+                //hier kun je kiezen 'group.expanded' of 'group.collapsed' om je menu al in of uit te klappen
             };
         }
 

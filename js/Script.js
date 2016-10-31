@@ -1,7 +1,7 @@
                                         //Inhoud van de kaart toevoegen:
 //Achtergrond kaarten:
 var
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Bosma Grafiek'}),
     
     cycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
@@ -18,12 +18,12 @@ var
 
 //Variabelen van de routes:
     
-    Hoofdroute = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup('<a target="_blank" href="https://github.com/Leemeijer/Webmap-Bart/tree/master">Github Bart</a>'),
-    LokaleVariant = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Lokale varianten vanuit papieren kaarten ter plekke"),
-    Swiss02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 2 vanuit Zwitserland"),
-    Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Route 7 vanuit Zwitserland"),
-    ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}).bindPopup("Via Francigena"),
-    Aanbevolen = L.geoJson(null, {style:style}).bindPopup("Deel van de E1, gelopen door Bosma");
+    Hoofdroute = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
+    LokaleVariant = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
+    Swiss02 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
+    Swiss07 = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
+    ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
+    Aanbevolen = L.geoJson(null, {style:style});
 
     
 //Variabelen van de Points of Interest:
@@ -57,6 +57,12 @@ var
 
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
+
+//__________________________________________________________________________________________________________________  
+                                        //Popups voor de lijnen: 
+//Vernoem je variabele en zet er '.bindPopup' achter om de popup te maken. Alles tussen de haakjes () is wat je te zien krijgt.
+
+ViaF.bindPopup('<a target="_blank" href="http://www.dewegvandefranken.nl/">Via Francigena</a>');
 
 //__________________________________________________________________________________________________________________  
                                         //Lagen menu toevoegen:  
@@ -105,6 +111,17 @@ var Esri = L.esri.basemapLayer('Topographic');
 //Lagen menu
     var control= L.Control.styledLayerControl(kaarten, data).addTo(map);
 
+//__________________________________________________________________________________________________________________ 
+                                        //Legenda (werkt nog niet)
+
+var legend = L.control({position: 'bottomleft'});
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend');
+    div.innerHTML = '<b>Titel</b>';
+   return div;
+};
+legend.addTo(map);
 
 //__________________________________________________________________________________________________________________  
                                         //Functies maken (stijl en mouseover):
@@ -126,7 +143,7 @@ function highlightFeature(e) {
 
     layer.setStyle({
         weight: 10,
-        color: '#0af2fc',
+        color: '#58a2d8',
         opacity: 0.5
     });
 

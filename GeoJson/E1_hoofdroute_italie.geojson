@@ -28,7 +28,7 @@
         "desc": "Hoofdroute hoofdgedeelte",
         "url" : "eventuele website",
         "color": "#af0000",
-        "opacity": "0.8",
+        "opacity": "1",
 	"dashArray": "3, 2",
 	"weight": "5"
       },
@@ -49,7 +49,7 @@
         "desc": "Hoofdroute hoofdgedeelte",
         "url" : "eventuele website",
         "color": "#af0000",
-        "opacity": "0.8",
+        "opacity": "1",
 	"dasharray": "",
 	"weight": "3"
       },
@@ -74,7 +74,7 @@
         "desc": "Hoofdroute hoofdgedeelte",
         "url" : "eventuele website",
         "color": "#af0000",
-        "opacity": "0.8",
+        "opacity": "1",
 	"dasharray": "",
 	"weight": "3"
       },

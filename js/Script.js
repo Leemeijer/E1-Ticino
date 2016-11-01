@@ -62,7 +62,13 @@ var Esri = L.esri.basemapLayer('Topographic');
                                         //Popups voor de lijnen: 
 //Vernoem je variabele en zet er '.bindPopup' achter om de popup te maken. Alles tussen de haakjes () is wat je te zien krijgt.
 
-ViaF.bindPopup('<a target="_blank" href="http://www.dewegvandefranken.nl/">Via Francigena</a>');
+Hoofdroute.bindPopup('<b>German Site for E1:</b> <a target="_blank" href="https://e1.hiking-europe.eu/">Hiking Europe</a> <br> <b>All hiking trails in Europe:</b> <a target="_blank" href="http://waymarkedtrails.org/">Waymarked Trails</a>')
+LokaleVariant.bindPopup('<a target="_blank" href="http://web.archive.org/web/20160405141619/http://www.enrosadira.it/e1/">Local E1 Alternatives</a>')
+ViaF.bindPopup('<b>Site:</b> <br> <a target="_blank" href="http://www.dewegvandefranken.nl/">Via Francigena</a>')
+Aanbevolen.bindPopup('Recommended bij BosmaGrafiek.nl for a part of the pilgrimage from the St. Gottthard pass to Roma')
+Swiss02.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-02.html">Trans Swiss Trail</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>')
+Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-07.html">Via Gottardo</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>');
+
 
 //__________________________________________________________________________________________________________________  
                                         //Lagen menu toevoegen:  
@@ -122,6 +128,8 @@ legend.onAdd = function (map) {
    return div;
 };
 legend.addTo(map);
+
+
 
 //__________________________________________________________________________________________________________________  
                                         //Functies maken (stijl en mouseover):

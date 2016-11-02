@@ -13,6 +13,16 @@ var
     
     stamenWatercolor =
     L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    
+    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+    }),
+
+    googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+    });
 
 //Variabelen van de routes:
     
@@ -78,6 +88,7 @@ var
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
+
 //__________________________________________________________________________________________________________________  
                                         //Popups voor de lijnen: 
 //Vernoem je variabele en zet er '.bindPopup' achter om de popup te maken. Alles tussen de haakjes () is wat je te zien krijgt.
@@ -104,7 +115,9 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
             "Stamen Terrain"    : stamenTerrain,
             "Stamen Toner"      : stamenToner,
             "Stamen Watercolor" : stamenWatercolor,
-            "Esri Topographic"  : Esri
+            "Esri Topographic"  : Esri,
+            "Google Map"        : googleStreets,
+            "Google Satellite"  : googleSat
             }
         }];
 
@@ -123,12 +136,20 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
             }
         },
         
+        {
+                    groupName: "test Trails",
+                    expanded: true,
+                    layers: {
+            
+            }
+        },
+        
                     {
                     groupName: "POI's",
                     expanded: true,
                     layers: {
-            "Pedestrian Bridges"       : Bruggen,
-            "Train Stations"            : Stations
+            "Pedestrian Bridges"        : Bruggen,
+            "Train Stations"            : Stations     
             }
         }];
 
@@ -207,8 +228,6 @@ var titelIcon = L.icon ({
         iconAnchor: [0,0]
      });
 
-    L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
-
 //Treinstations
 var trainIcon = L.icon ({
     iconUrl: 'images/Train.png',
@@ -232,3 +251,18 @@ L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarl
 //Leaflet marker met popup (Magenta)
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
+
+ var titel = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
+
+
+
+
+ var textLatLng = [45.548679, 9.644211];  
+        var myTextLabel = L.marker(textLatLng, {
+            icon: L.divIcon({
+                className: 'text-labels',   // Set class for CSS styling
+                html: '<div> <img style="width:240px" src="images/legenda.png" /></div>'
+            }),
+            draggable: true,       // Allow label dragging...?
+            zIndexOffset: 1000     // Make appear above other map features
+        }).addTo(map);

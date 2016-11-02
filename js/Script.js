@@ -2,9 +2,7 @@
 //Achtergrond kaarten:
 var
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Bosma Grafiek'}),
-    
-    cycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
-    
+   
     transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
     stamenTerrain =
@@ -25,21 +23,43 @@ var
     ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
     Aanbevolen = L.geoJson(null, {style:style});
 
+
     
 //Variabelen van de Points of Interest:
-    Stations = L.geoJson(null),
-    Bruggen = L.geoJson(null);
+    Stations = L.geoJson(null, {
+                pointToLayer: function(feature, latlng){
+                    return L.marker(latlng, {
+                        icon: trainIcon
+                        })
+                    }
+            });
+            
+    Bruggen = L.geoJson(null, {
+                style: function(feature) {
+                    return {
+                        color: '#000000', 
+                        fillColor: '#ffff00'
+                        };
+                    },
+                    pointToLayer: function(feature, latlng) {
+                        return new L.CircleMarker(latlng, {
+                            radius: 5, 
+                            fillOpacity: 0.85
+                            });
+                        }
+                });
 
-//GeoJson van de routes:
+//__________________________________________________________________________________________________________________      
+                                        //GeoJsons oproepen:
+//Routes:
     jQuery.getJSON("GeoJson/E1_hoofdroute_italie.geojson", function (data) { Hoofdroute.addData(data)}),
     jQuery.getJSON("GeoJson/E1_lokale_varianten.geojson", function (data) { LokaleVariant.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
     jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)}),
     jQuery.getJSON("GeoJson/Bosma_aanbevolen.geojson", function (data) { Aanbevolen.addData(data)});
-
-        
-//GeoJson van de Points of Interest:
+ 
+//Points of Interest:
     jQuery.getJSON("GeoJson/POI_stations_langs_route.geojson", function (data) { Stations.addData(data)}),
     jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)});
 
@@ -76,11 +96,10 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
 //Achtergrond kaarten:
     var kaarten = [
                     {
-                    groupName:  "Achtergrondkaart",
+                    groupName:  "Basemaps",
                     expanded: false,
                     layers: {
             "OSM Basic"         : osm,
-            "OSM Cycle"         : cycle,
             "OSM Transport"     : transport,
             "Stamen Terrain"    : stamenTerrain,
             "Stamen Toner"      : stamenToner,
@@ -92,7 +111,7 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
 //Routes en Punten:
     var data = [
                     {
-                    groupName: "Routes",
+                    groupName: "Hiking Trails",
                     expanded: true,
                     layers: {
             "E1 Hiking Trail"           : Hoofdroute,
@@ -105,17 +124,19 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
         },
         
                     {
-                    groupName: "Punten",
+                    groupName: "POI's",
                     expanded: true,
                     layers: {
-            "Bruggen"                   : Bruggen,
-            "Stations"                  : Stations
+            "Pedestrian Bridges"       : Bruggen,
+            "Train Stations"            : Stations
             }
         }];
 
 
 //Lagen menu
     var control= L.Control.styledLayerControl(kaarten, data).addTo(map);
+
+//opmerking: Alles wat je in deze Layer Control wilt hebben moet je boven deze functie plaatsen anders gaat het mis.
 
 //__________________________________________________________________________________________________________________ 
                                         //Legenda (werkt nog niet)
@@ -137,14 +158,14 @@ legend.addTo(map);
 //Functies
     function style(feature) {
         return {
-            color   : feature.properties.color,
-            opacity : feature.properties.opacity,
-            weight: feature.properties.weight,
-            dashArray: feature.properties.dashArray,
-            lineCap: feature.properties.lineCap
+            color       : feature.properties.color,
+            opacity     : feature.properties.opacity,
+            weight      : feature.properties.weight,
+            dashArray   : feature.properties.dashArray,
+            lineCap     : feature.properties.lineCap
         };
     };
-
+//Met bovenstaande functie geef je aan welke eigenschappen (properties) je uit de GeoJson bestanden haalt. Zorg dus dat in deze bestanden de gegevens kloppen.
     
 function highlightFeature(e) {
     var layer = e.target;
@@ -173,8 +194,9 @@ function onEachFeature(feature, layer) {
         mouseover: highlightFeature,
         mouseout: resetHighlight,
         click: zoomToFeature
-    });
+    })
 }
+
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren
@@ -187,6 +209,13 @@ var titelIcon = L.icon ({
 
     L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
 
+//Treinstations
+var trainIcon = L.icon ({
+    iconUrl: 'images/Train.png',
+    iconSize: [25,25],
+    iconAnchor: [12,12]
+});
+ 
 //Gevaarlijke brug
 var gevaar = L.icon ({
         iconUrl: 'images/gevaar.png',
@@ -194,10 +223,12 @@ var gevaar = L.icon ({
         iconAnchor: [0,0]
      });
 
-    L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+//__________________________________________________________________________________________________________________ 
+                                        //Losse markers
 
-//Simpele marker met popup (Magenta)
+//Marker met eigen icoon 
+L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+
+//Leaflet marker met popup (Magenta)
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
-   
-

@@ -7,16 +7,3 @@ html, body, #map {
     width: 100vw;
 }
 
-.legend {
-    line-height: 18px;
-    color: #343434;
-    background-color: #c2d4d4;
-}
-.legend {
-    width: auto;
-    height: auto;
-    float: left;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    opacity: 1;
-}

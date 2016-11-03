@@ -79,7 +79,7 @@ var
     var map = L.map('map', {layers: [osm, Hoofdroute], 
             minZoom: 9,
             maxBounds: [[46.050361, 8.1672119140625],
-                        [45.4478, 8.1672119140625],
+                        [44.991221, 8.1672119140625],
                         [44.991221, 9.698682], 
                         [46.050361, 9.698682] ]
     }).setView([45.654464,  9.164932], 10);
@@ -160,17 +160,28 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
 //opmerking: Alles wat je in deze Layer Control wilt hebben moet je boven deze functie plaatsen anders gaat het mis.
 
 //__________________________________________________________________________________________________________________ 
-                                        //Legenda (werkt nog niet)
+                                        //Legenda
 
 var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML = '<b>Titel</b>';
+    div.innerHTML = '<div> <img style="width:50%; height:50%"src="images/legenda.png" /> </div>';
    return div;
 };
 legend.addTo(map);
 
+//__________________________________________________________________________________________________________________ 
+                                        //Schaalbalk
+
+// add a scale at at your map.
+var scale = L.control.scale().addTo(map); 
+
+// Get the label.
+var metres = scale._getRoundNum(map.containerPointToLatLng([0, map.getSize().y / 2 ]).distanceTo( map.containerPointToLatLng([scale.options.maxWidth,map.getSize().y / 2 ])))
+  label = metres < 1000 ? metres + ' m' : (metres / 1000) + ' km';
+
+  console.log(label);
 
 //__________________________________________________________________________________________________________________ 
                                         //Titel 
@@ -179,7 +190,7 @@ var titel = L.control({position: 'topleft'});
 
 titel.onAdd = function (map) {
     var div = L.DomUtil.create('div');
-    div.innerHTML = '<div> <img src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
+    div.innerHTML = '<div> <img style="width:100%; height:100%" src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
    return div;
 };
 titel.addTo(map);

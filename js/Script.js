@@ -13,16 +13,6 @@ var
     
     stamenWatercolor =
     L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
-    
-    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-    maxZoom: 20,
-    subdomains:['mt0','mt1','mt2','mt3']
-    }),
-
-    googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-    maxZoom: 20,
-    subdomains:['mt0','mt1','mt2','mt3']
-    });
 
 //Variabelen van de routes:
     
@@ -33,8 +23,8 @@ var
     ViaF = L.geoJson(null, {style:style, onEachFeature:onEachFeature}),
     Aanbevolen = L.geoJson(null, {style:style});
 
+ Hoofdroute.setZIndex(1000);
 
-    
 //Variabelen van de Points of Interest:
     Stations = L.geoJson(null, {
                 pointToLayer: function(feature, latlng){
@@ -68,7 +58,7 @@ var
     jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
     jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)}),
     jQuery.getJSON("GeoJson/Bosma_aanbevolen.geojson", function (data) { Aanbevolen.addData(data)});
- 
+
 //Points of Interest:
     jQuery.getJSON("GeoJson/POI_stations_langs_route.geojson", function (data) { Stations.addData(data)}),
     jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)});
@@ -84,6 +74,7 @@ var
                         [46.050361, 9.698682] ]
     }).setView([45.654464,  9.164932], 10);
 map.locate({setView: true, maxZoom: 16});
+
 
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
@@ -115,9 +106,7 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
             "Stamen Terrain"    : stamenTerrain,
             "Stamen Toner"      : stamenToner,
             "Stamen Watercolor" : stamenWatercolor,
-            "Esri Topographic"  : Esri,
-            "Google Map"        : googleStreets,
-            "Google Satellite"  : googleSat
+            "Esri Topographic"  : Esri
             }
         }];
 
@@ -166,7 +155,7 @@ var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML = '<div> <img style="width:50%; height:50%"src="images/legenda.png" /> </div>';
+    div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/legenda.png" /> </div>';
    return div;
 };
 legend.addTo(map);
@@ -175,7 +164,7 @@ legend.addTo(map);
                                         //Schaalbalk
 
 // add a scale at at your map.
-var scale = L.control.scale().addTo(map); 
+var scale = L.control.scale({position: 'bottomright'}).addTo(map); 
 
 // Get the label.
 var metres = scale._getRoundNum(map.containerPointToLatLng([0, map.getSize().y / 2 ]).distanceTo( map.containerPointToLatLng([scale.options.maxWidth,map.getSize().y / 2 ])))
@@ -190,7 +179,7 @@ var titel = L.control({position: 'topleft'});
 
 titel.onAdd = function (map) {
     var div = L.DomUtil.create('div');
-    div.innerHTML = '<div> <img style="width:100%; height:100%" src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
+    div.innerHTML = '<div> <img style="width:90%; height:100%" src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
    return div;
 };
 titel.addTo(map);

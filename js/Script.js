@@ -201,7 +201,7 @@ var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/legenda.png" /> </div>';
+    div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/Legenda.png" /> </div>';
    return div;
 };
 legend.addTo(map);

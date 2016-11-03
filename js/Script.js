@@ -62,8 +62,8 @@ var
 //__________________________________________________________________________________________________________________      
                                         //GeoJsons oproepen:
 //Routes:
-    jQuery.getJSON("GeoJson/E1_hoofdroute_italie.geojson", function (data) { Hoofdroute.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_lokale_varianten.geojson", function (data) { LokaleVariant.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_hoofdroute_italie.json", function (data) { Hoofdroute.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_lokale_varianten.json", function (data) { LokaleVariant.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
     jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)}),
@@ -79,11 +79,11 @@ var
     var map = L.map('map', {layers: [osm, Hoofdroute], 
             minZoom: 9,
             maxBounds: [[46.050361, 8.1672119140625],
-                        [44.991221, 8.1672119140625],
+                        [45.4478, 8.1672119140625],
                         [44.991221, 9.698682], 
                         [46.050361, 9.698682] ]
     }).setView([45.654464,  9.164932], 10);
-//Opmerking: Zoomcontrol: false zorgt er hier voor dat het (standaard?) in- en uitzoom knopje uit staat. Zoomcontrol is hieronder weer aan gezet. Als je Zoomcontrol weg haalt staat deze er dus wel.
+map.locate({setView: true, maxZoom: 16});
 
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
@@ -186,7 +186,7 @@ titel.addTo(map);
 
 
 //__________________________________________________________________________________________________________________  
-                                        //Functies maken (stijl en mouseover):
+                                        //Functies:
 
 //Functies
     function style(feature) {
@@ -230,6 +230,20 @@ function onEachFeature(feature, layer) {
     })
 }
 
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+}
+
+map.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren

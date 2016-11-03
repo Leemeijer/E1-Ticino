@@ -62,8 +62,8 @@ var
 //__________________________________________________________________________________________________________________      
                                         //GeoJsons oproepen:
 //Routes:
-    jQuery.getJSON("GeoJson/E1_hoofdroute_italie.geojson", function (data) { Hoofdroute.addData(data)}),
-    jQuery.getJSON("GeoJson/E1_lokale_varianten.geojson", function (data) { LokaleVariant.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_hoofdroute_italie.json", function (data) { Hoofdroute.addData(data)}),
+    jQuery.getJSON("GeoJson/E1_lokale_varianten.json", function (data) { LokaleVariant.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route02.geojson", function (data) { Swiss02.addData(data)}),
     jQuery.getJSON("GeoJson/Swiss_route07.geojson", function (data) { Swiss07.addData(data)}),
     jQuery.getJSON("GeoJson/Via Francigena.geojson", function (data) { ViaF.addData(data)}),
@@ -79,11 +79,11 @@ var
     var map = L.map('map', {layers: [osm, Hoofdroute], 
             minZoom: 9,
             maxBounds: [[46.050361, 8.1672119140625],
-                        [44.991221, 8.1672119140625],
+                        [45.4478, 8.1672119140625],
                         [44.991221, 9.698682], 
                         [46.050361, 9.698682] ]
     }).setView([45.654464,  9.164932], 10);
-//Opmerking: Zoomcontrol: false zorgt er hier voor dat het (standaard?) in- en uitzoom knopje uit staat. Zoomcontrol is hieronder weer aan gezet. Als je Zoomcontrol weg haalt staat deze er dus wel.
+map.locate({setView: true, maxZoom: 16});
 
 var Esri = L.esri.basemapLayer('Topographic');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
@@ -172,9 +172,21 @@ legend.onAdd = function (map) {
 legend.addTo(map);
 
 
+//__________________________________________________________________________________________________________________ 
+                                        //Titel 
+
+var titel = L.control({position: 'topleft'});
+
+titel.onAdd = function (map) {
+    var div = L.DomUtil.create('div');
+    div.innerHTML = '<div> <img src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
+   return div;
+};
+titel.addTo(map);
+
 
 //__________________________________________________________________________________________________________________  
-                                        //Functies maken (stijl en mouseover):
+                                        //Functies:
 
 //Functies
     function style(feature) {
@@ -218,16 +230,23 @@ function onEachFeature(feature, layer) {
     })
 }
 
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+}
+
+map.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren
-//Titel:
-var titelIcon = L.icon ({
-        iconUrl: 'images/E1_ticino_title_up01_rgb[301].png',
-        iconSize: [500, 109],
-        iconAnchor: [0,0]
-     });
-
 //Treinstations
 var trainIcon = L.icon ({
     iconUrl: 'images/Train.png',
@@ -251,18 +270,3 @@ L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarl
 //Leaflet marker met popup (Magenta)
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
-
- var titel = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
-
-
-
-
- var textLatLng = [45.548679, 9.644211];  
-        var myTextLabel = L.marker(textLatLng, {
-            icon: L.divIcon({
-                className: 'text-labels',   // Set class for CSS styling
-                html: '<div> <img style="width:240px" src="images/legenda.png" /></div>'
-            }),
-            draggable: true,       // Allow label dragging...?
-            zIndexOffset: 1000     // Make appear above other map features
-        }).addTo(map);

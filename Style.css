@@ -20,10 +20,3 @@ html, body, #map {
     margin-bottom: 8px;
     opacity: 1;
 }
-
-.text-labels {
-            font-size: 2em;
-            font-weight: 700;
-    border-color: black;
-            /* Use color, background, set margins for offset, etc */
-        }

@@ -173,12 +173,12 @@ legend.addTo(map);
 
 
 //__________________________________________________________________________________________________________________ 
-                                        //Titel (werkt nog niet)
+                                        //Titel 
 
 var titel = L.control({position: 'topleft'});
 
 titel.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
+    var div = L.DomUtil.create('div');
     div.innerHTML = '<div> <img src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
    return div;
 };
@@ -233,13 +233,6 @@ function onEachFeature(feature, layer) {
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren
-//Titel:
-var titelIcon = L.icon ({
-        iconUrl: 'images/E1_ticino_title_up01_rgb[301].png',
-        iconSize: [500, 109],
-        iconAnchor: [0,0]
-     });
-
 //Treinstations
 var trainIcon = L.icon ({
     iconUrl: 'images/Train.png',
@@ -263,18 +256,3 @@ L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarl
 //Leaflet marker met popup (Magenta)
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
-
- var titelicoon = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
-
-
-
-
- var textLatLng = [45.548679, 9.644211];  
-        var myTextLabel = L.marker(textLatLng, {
-            icon: L.divIcon({
-                className: 'text-labels',   // Set class for CSS styling
-                html: '<div> <img style="width:240px" src="images/legenda.png" /></div>'
-            }),
-            draggable: true,       // Allow label dragging...?
-            zIndexOffset: 1000     // Make appear above other map features
-        }).addTo(map);

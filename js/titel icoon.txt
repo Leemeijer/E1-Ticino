@@ -1,0 +1,9 @@
+//Titel:
+var titelIcon = L.icon ({
+        iconUrl: 'images/E1_ticino_title_up01_rgb[301].png',
+        iconSize: [500, 109],
+        iconAnchor: [0,0]
+     });
+
+
+var titelicoon = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);

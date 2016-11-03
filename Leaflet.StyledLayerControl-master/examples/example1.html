@@ -53,9 +53,9 @@
 			L.marker([-21, -49.50]).addTo(soybeans_sp);
 			
 			// Sao Paulo Corn Plant
-			var corn_sp = new L.LayerGroup();
-			L.marker([-22, -48.10]).addTo(corn_sp),
-			L.marker([-21, -48.60]).addTo(corn_sp);
+			var pont = new L.LayerGroup();
+			L.marker([45.9846512, 8.94589019]).addTo(pont),
+			L.marker([45.9040536, 8.90070097]).addTo(pont);
 			
 			// Rio de Janeiro Bean Plant
 			var bean_rj = new L.LayerGroup();
@@ -120,7 +120,7 @@
 								expanded : true,
 								layers    : { 
 									"Soybeans Plant" : soybeans_sp,
-									"Corn Plant" 	 : corn_sp
+									"Corn Plant" 	 : pont
 								}	
                              }, {
 								groupName : "Rio de Janeiro",

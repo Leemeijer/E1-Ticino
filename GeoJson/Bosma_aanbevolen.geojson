@@ -8,7 +8,7 @@
         "desc": "Route 2 vanuit Zwitserland",
         "url" : "<a href='http://staflab.net/wp/maplab/europafietsers/europafietsers-routedetails/'>naar ring 1</a>",
         "color": "#e8fc00",
-        "opacity": "0.7",
+        "opacity": "0.5",
 	"weight": "10"
       },
       "geometry": {

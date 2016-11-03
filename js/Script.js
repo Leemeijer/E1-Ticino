@@ -1,7 +1,7 @@
                                         //Inhoud van de kaart toevoegen:
 //Achtergrond kaarten:
 var
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Bosma Grafiek'}),
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
    
     transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
     
@@ -47,6 +47,20 @@ var
                         }
                 });
 
+    FerryFunicular = L.geoJson(null, {
+                style: function(feature) {
+                    return {
+                        color: '#000000', 
+                        fillColor: '#ffffff'
+                        };
+                    },
+                    pointToLayer: function(feature, latlng) {
+                        return new L.CircleMarker(latlng, {
+                            radius: 5, 
+                            fillOpacity: 0.85
+                            });
+                        }
+                });
 //__________________________________________________________________________________________________________________      
                                         //Esri basemap toevoegen:
 
@@ -65,17 +79,18 @@ var Esri = L.esri.basemapLayer('Topographic');
 
 //Points of Interest:
     jQuery.getJSON("GeoJson/POI_stations_langs_route.geojson", function (data) { Stations.addData(data)}),
-    jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)});
+    jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)}),
+    jQuery.getJSON("GeoJson/POI_pont_en_trein.geojson", function (data) { FerryFunicular.addData(data)});
 
 //__________________________________________________________________________________________________________________      
                                         //Maken van de kaart:
 //Map + layers + eigenschappen 
     var map = L.map('map', {layers: [osm, Hoofdroute], 
             minZoom: 9,
-            maxBounds: [[46.050361, 8.1672119140625],
-                        [44.991221, 8.1672119140625],
-                        [44.991221, 9.698682], 
-                        [46.050361, 9.698682] ]
+            maxBounds: [[46.160594, 8.1672119140625],   //NW punt
+                        [44.991221, 8.1672119140625],   //ZW punt
+                        [44.991221, 9.698682],          //ZO punt
+                        [46.160594, 9.698682] ]         //NO punt
     }).setView([45.654464,  9.164932], 10);
 
 //Met de regel hieronder voeg je de locatie button toe
@@ -84,8 +99,8 @@ L.control.locate({position: 'bottomright'}).addTo(map);
 //__________________________________________________________________________________________________________________  
                                         //Markers
     var pont = new L.LayerGroup();
-    L.marker([45.9846512, 8.94589019]).addTo(pont),
-    L.marker([45.9040536, 8.90070097]).addTo(pont);
+    L.marker([45.9846512, 8.94589019]).addTo(pont).bindPopup('<div> <img style="width:80px" src="images/funicolare.jpg"/> </div>'),
+    L.marker([45.9040536, 8.90070097]).addTo(pont).bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
 
     var impressies = new L.LayerGroup();
     L.marker([45.465526, 8.885021]).addTo(impressies).bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
@@ -107,6 +122,8 @@ ViaF.bindPopup('<b>Site:</b> <br> <a target="_blank" href="http://www.dewegvande
 Aanbevolen.bindPopup('Recommended bij BosmaGrafiek.nl for a part of the pilgrimage from the St. Gottthard pass to Roma')
 Swiss02.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-02.html">Trans Swiss Trail</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>')
 Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-07.html">Via Gottardo</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>');
+
+FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
 
 //__________________________________________________________________________________________________________________  
                                         //Lagen menu toevoegen:  
@@ -148,7 +165,7 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
                     layers: {
             "Pedestrian Bridges"        : Bruggen,
             "Train Stations"            : Stations,
-            "Ferry and funicular"       : pont
+            "Ferry and funicular"       : FerryFunicular
             }
         },
     
@@ -201,7 +218,7 @@ var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/legenda.png" /> </div>';
+    div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/Legenda.png" /> </div>';
    return div;
 };
 legend.addTo(map);
@@ -281,15 +298,15 @@ map.on('locationerror', onLocationError);
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren
 //Treinstations
-var trainIcon = L.icon ({
-    iconUrl: 'images/Train.png',
-    iconSize: [25,25],
-    iconAnchor: [12,12]
+var trainIcon = L.icon({
+        iconUrl: 'images/Train.png',
+        iconSize: [25,25],
+        iconAnchor: [12,12] 
 });
  
 //Gevaarlijke brug
 var gevaar = L.icon ({
         iconUrl: 'images/gevaar.png',
         iconSize: [25, 25],
-        iconAnchor: [0,0]
+        iconAnchor: [12,12]
      });

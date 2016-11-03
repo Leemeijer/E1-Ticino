@@ -172,6 +172,18 @@ legend.onAdd = function (map) {
 legend.addTo(map);
 
 
+//__________________________________________________________________________________________________________________ 
+                                        //Titel (werkt nog niet)
+
+var titel = L.control({position: 'topleft'});
+
+titel.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend');
+    div.innerHTML = '<div> <img src="images/E1_ticino_title_up01_rgb[301].png"/> </div>';
+   return div;
+};
+titel.addTo(map);
+
 
 //__________________________________________________________________________________________________________________  
                                         //Functies maken (stijl en mouseover):
@@ -252,7 +264,7 @@ L.marker([45.342898, 8.880618], {icon: gevaar}).addTo(map).bindPopup('<b>Gevaarl
 var magenta = L.marker([45.465526, 8.885021]).addTo(map);
     magenta.bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
 
- var titel = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
+ var titelicoon = L.marker([45.977305, 8.138672], {icon: titelIcon}).addTo(map);
 
 
 

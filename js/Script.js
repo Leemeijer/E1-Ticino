@@ -1,18 +1,18 @@
                                         //Inhoud van de kaart toevoegen:
 //Achtergrond kaarten:
 var
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
    
-    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenTerrain =
-    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenToner =
-    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenWatercolor =
-    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
 
 //Variabelen van de routes:
     
@@ -59,12 +59,13 @@ var
                             radius: 5, 
                             fillOpacity: 0.85
                             });
-                        }
+                        }, onEachFeature: yourOnEachFeature
                 });
 //__________________________________________________________________________________________________________________      
                                         //Esri basemap toevoegen:
 
 var Esri = L.esri.basemapLayer('Topographic');
+var Imagery = L.esri.basemapLayer('Imagery');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
 //__________________________________________________________________________________________________________________      
@@ -98,18 +99,13 @@ L.control.locate({position: 'bottomright'}).addTo(map);
 
 //__________________________________________________________________________________________________________________  
                                         //Markers
-    var pont = new L.LayerGroup();
-    L.marker([45.9846512, 8.94589019]).addTo(pont).bindPopup('<div> <img style="width:80px" src="images/funicolare.jpg"/> </div>'),
-    L.marker([45.9040536, 8.90070097]).addTo(pont).bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
-
     var impressies = new L.LayerGroup();
     L.marker([45.465526, 8.885021]).addTo(impressies).bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
 
     var horeca = new L.LayerGroup();
     L.marker([45.206231, 9.015038]).addTo(horeca);
     
-    var vragen = new L.LayerGroup();
-    L.marker([45.342898, 8.880618]).addTo(vragen).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+    L.marker([45.342898, 8.880618]).addTo(impressies).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
 //__________________________________________________________________________________________________________________  
                                         //Popups: 
@@ -123,7 +119,7 @@ Aanbevolen.bindPopup('Recommended bij BosmaGrafiek.nl for a part of the pilgrima
 Swiss02.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-02.html">Trans Swiss Trail</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>')
 Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-07.html">Via Gottardo</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>');
 
-FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
+
 
 //__________________________________________________________________________________________________________________  
                                         //Lagen menu toevoegen:  
@@ -139,7 +135,8 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
             "Stamen Terrain"    : stamenTerrain,
             "Stamen Toner"      : stamenToner,
             "Stamen Watercolor" : stamenWatercolor,
-            "Esri Topographic"  : Esri
+            "Esri Topographic"  : Esri,
+            "Esri Imagery"      : Imagery
             }
         }];
 
@@ -149,8 +146,8 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
                     groupName: "Hiking Trails",
                     expanded: true,
                     layers: {
-            "E1 Hiking Trail"           : Hoofdroute,
-            "E1 Local Alternatives"     : LokaleVariant,
+            "E1 Hiking trail"           : Hoofdroute,
+            "E1 Local alternatives"     : LokaleVariant,
             "Swiss 2: Trans Swiss Trail": Swiss02,
             "Swiss 7: Via Gottardo"     : Swiss07,
             "Via Francigena"            : ViaF,
@@ -160,11 +157,11 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
         
         
                     {
-                    groupName: "Traffic Info",
+                    groupName: "Hiking Info",
                     expanded: true,
-                    layers: {
-            "Pedestrian Bridges"        : Bruggen,
-            "Train Stations"            : Stations,
+                    layers: {   
+            "Pedestrian bridges"        : Bruggen,
+            "Train stations"            : Stations,
             "Ferry and funicular"       : FerryFunicular
             }
         },
@@ -177,18 +174,7 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
             "Eat & sleep"               : horeca
             
             }
-        },
-        
-                    {
-                    groupName: "Survey",
-                    expanded: false,
-                    layers: {
-            "Questions"                 : vragen
-            
-            }
         }
-    
-    
     ];
 
 
@@ -280,20 +266,11 @@ function onEachFeature(feature, layer) {
     })
 }
 
-function onLocationFound(e) {
-    var radius = e.accuracy / 2;
-
-    L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+function yourOnEachFeature(feature, layer){
+    if (feature.properties.name) {
+        layer.bindPopup(feature.properties.name + '<br>' + feature.properties.omschrijvi + '<br>' + feature.properties.website + '<br>' + '<br>' +  feature.properties.url_image);
+    }
 }
-
-map.on('locationfound', onLocationFound);
-
-function onLocationError(e) {
-    alert(e.message);
-}
-
-map.on('locationerror', onLocationError);
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren
@@ -305,8 +282,29 @@ var trainIcon = L.icon({
 });
  
 //Gevaarlijke brug
-var gevaar = L.icon ({
+var gevaarIcoon = L.icon ({
         iconUrl: 'images/gevaar.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Scenery
+var cameraIcoon = L.icon ({
+        iconUrl: 'images/Camera.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Eat & Sleep
+var horecaIcoon = L.icon ({
+        iconUrl: 'images/.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Navigation Details
+var opmerkingenIcoon = L.icon ({
+        iconUrl: 'images/voetstap.png',
         iconSize: [25, 25],
         iconAnchor: [12,12]
      });

@@ -1,9 +1,36 @@
 ﻿{
-"type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-                                                                                                                                  
-"features": [
-{ "type": "Feature", "properties": { "#Opacity": 100, "#LayerName": "POI Ferry and funicular", "#PageX": 290.890000, "#PageY": 564.930000, "#Id": -214748364, "#Name": "Ferry and funicular", "#Horizonta": 1.000000, "#VerticalS": 1.000000, "#Rotation": 0.000000, "#Style": "Ferry and funicular", "#MapX": 8.945488, "#MapY": 45.986225, "nummer": 1, "naam": "Monte San Salvatore", "omschrijvi": "Funiculare", "url_websit": "http:\/\/www.MonteSanSalvatore.ch\/en", "naam_image": "IMG_20160505_095525_funicolare.jpg", "url_image": null }, "geometry": { "type": "Point", "coordinates": [ 8.945339, 45.990358  ] } },
-{ "type": "Feature", "properties": { "#Opacity": 100, "#LayerName": "POI Ferry and funicular", "#PageX": 287.240000, "#PageY": 572.740000, "#Id": -214748364, "#Name": "Ferry and funicular", "#Horizonta": 1.000000, "#VerticalS": 1.000000, "#Rotation": 0.000000, "#Style": "Ferry and funicular", "#MapX": 8.912733, "#MapY": 45.916079, "nummer": 2, "naam": "Società Navigazione del Lago di��", "omschrijvi": "Ferry", "url_websit": "http:\/\/www.LakeLugano.ch\/en", "naam_image": "IMG_20160505_165210_veerboot.jpg", "url_image": null }, "geometry": { "type": "Point", "coordinates": [ 8.912732702050874, 45.916079288454782 ] } }
-]
+
+     "type": "FeatureCollection",
+
+     "features": [
+
+	{ 
+	   "type": "Feature", 
+	   "properties": { 
+		"nummer": 1, 
+		"name": "<b>Monte San Salvatore</b>", 
+		"omschrijvi": "Funiculare", 
+		"website": "" ,  
+		"url_image": "<div> <img style=width:80% src=images/funicolare.jpg /> </div>"
+	    }, 
+	    "geometry": { 
+		"type": "Point", 
+		"coordinates": [ 8.945339, 45.990358  ] } },
+
+
+	{ 
+	    "type": "Feature", 
+	    "properties": { 
+		"nummer": 2, 
+		"name": "<b>Navigazione del Lago di Lugano</b>", 
+		"omschrijvi": "This is the ferry from Morcote to Porto Ceresio", 
+		"website": "<b>Link:<b> <a target=_blank href=https://www.lakelugano.ch//en>https://www.lakelugano.ch</a>", 
+		"url_image": "<div> <img style=width:80% src=images/veerboot.jpg /> </div>" 
+	    }, 
+	    "geometry": { 
+		"type": "Point", 
+		"coordinates": [ 8.912732702050874, 45.916079288454782 ] } }
+
+	]
+
 }

@@ -3,16 +3,16 @@
 var
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
    
-    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
     
     stamenTerrain =
-    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
     
     stamenToner =
-    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
     
     stamenWatercolor =
-    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}),
+    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
 
 //Variabelen van de routes:
     
@@ -59,12 +59,13 @@ var
                             radius: 5, 
                             fillOpacity: 0.85
                             });
-                        }
+                        }, onEachFeature: yourOnEachFeature
                 });
 //__________________________________________________________________________________________________________________      
                                         //Esri basemap toevoegen:
 
 var Esri = L.esri.basemapLayer('Topographic');
+var Imagery = L.esri.basemapLayer('Imagery');
 //Esri Basemaps zijn onder anderen: Topographic, Imagery, NationalGeographic, Streets, Oceans, Gray, DarkGray, SchadedRelief
 
 //__________________________________________________________________________________________________________________      
@@ -109,7 +110,7 @@ L.control.locate({position: 'bottomright'}).addTo(map);
     L.marker([45.206231, 9.015038]).addTo(horeca);
     
     var vragen = new L.LayerGroup();
-    L.marker([45.342898, 8.880618]).addTo(vragen).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+    L.marker([45.342898, 8.880618]).addTo(Bruggen).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
 //__________________________________________________________________________________________________________________  
                                         //Popups: 
@@ -123,7 +124,7 @@ Aanbevolen.bindPopup('Recommended bij BosmaGrafiek.nl for a part of the pilgrima
 Swiss02.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-02.html">Trans Swiss Trail</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>')
 Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-07.html">Via Gottardo</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>');
 
-FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
+
 
 //__________________________________________________________________________________________________________________  
                                         //Lagen menu toevoegen:  
@@ -139,7 +140,8 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
             "Stamen Terrain"    : stamenTerrain,
             "Stamen Toner"      : stamenToner,
             "Stamen Watercolor" : stamenWatercolor,
-            "Esri Topographic"  : Esri
+            "Esri Topographic"  : Esri,
+            "Esri Imagery"      : Imagery
             }
         }];
 
@@ -149,8 +151,8 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
                     groupName: "Hiking Trails",
                     expanded: true,
                     layers: {
-            "E1 Hiking Trail"           : Hoofdroute,
-            "E1 Local Alternatives"     : LokaleVariant,
+            "E1 Hiking trail"           : Hoofdroute,
+            "E1 Local alternatives"     : LokaleVariant,
             "Swiss 2: Trans Swiss Trail": Swiss02,
             "Swiss 7: Via Gottardo"     : Swiss07,
             "Via Francigena"            : ViaF,
@@ -160,11 +162,11 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
         
         
                     {
-                    groupName: "Traffic Info",
+                    groupName: "Hiking Info",
                     expanded: true,
-                    layers: {
-            "Pedestrian Bridges"        : Bruggen,
-            "Train Stations"            : Stations,
+                    layers: {   
+            "Pedestrian bridges"        : Bruggen,
+            "Train stations"            : Stations,
             "Ferry and funicular"       : FerryFunicular
             }
         },
@@ -177,18 +179,7 @@ FerryFunicular.bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="ima
             "Eat & sleep"               : horeca
             
             }
-        },
-        
-                    {
-                    groupName: "Survey",
-                    expanded: false,
-                    layers: {
-            "Questions"                 : vragen
-            
-            }
         }
-    
-    
     ];
 
 
@@ -280,20 +271,11 @@ function onEachFeature(feature, layer) {
     })
 }
 
-function onLocationFound(e) {
-    var radius = e.accuracy / 2;
-
-    L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+function yourOnEachFeature(feature, layer){
+    if (feature.properties.name) {
+        layer.bindPopup(feature.properties.name + '<br>' + '<a target="_blank" href="https://www.lakelugano.ch//en">Ferry</a>' + '<br>' + '<div> <img style="width:50px"src="images/veerboot.jpg" /> </div>');
+    }
 }
-
-map.on('locationfound', onLocationFound);
-
-function onLocationError(e) {
-    alert(e.message);
-}
-
-map.on('locationerror', onLocationError);
 
 //__________________________________________________________________________________________________________________ 
                                         //Icoontjes maken en definiëren

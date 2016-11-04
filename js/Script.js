@@ -262,7 +262,7 @@ function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
-        click: zoomToFeature
+        //click: zoomToFeature
     })
 }
 
@@ -297,7 +297,7 @@ var cameraIcoon = L.icon ({
 
 //Eat & Sleep
 var horecaIcoon = L.icon ({
-        iconUrl: 'images/.png',
+        iconUrl: 'images/kopje.png',
         iconSize: [25, 25],
         iconAnchor: [12,12]
      });

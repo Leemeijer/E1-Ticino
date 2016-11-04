@@ -1,18 +1,18 @@
                                         //Inhoud van de kaart toevoegen:
 //Achtergrond kaarten:
 var
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
    
-    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    transport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', {attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenTerrain =
-    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenToner =
-    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
     
     stamenWatercolor =
-    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by Bart Leemeijer & Bosma Grafiek'}),
+    L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',      {attribution: '<a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | made by <a target="_blank" href="https://www.linkedin.com/in/bartleemeijer?trk=hp-identity-name">Bart Leemeijer</a> & <a target="_blank" href="http://bosmagrafiek.nl/">Bosma Grafiek</a>'}),
 
 //Variabelen van de routes:
     
@@ -99,18 +99,13 @@ L.control.locate({position: 'bottomright'}).addTo(map);
 
 //__________________________________________________________________________________________________________________  
                                         //Markers
-    var pont = new L.LayerGroup();
-    L.marker([45.9846512, 8.94589019]).addTo(pont).bindPopup('<div> <img style="width:80px" src="images/funicolare.jpg"/> </div>'),
-    L.marker([45.9040536, 8.90070097]).addTo(pont).bindPopup('<b>Veerpont</b><div> <img style="width:150px" src="images/veerboot.jpg"/> </div>');
-
     var impressies = new L.LayerGroup();
     L.marker([45.465526, 8.885021]).addTo(impressies).bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
 
     var horeca = new L.LayerGroup();
     L.marker([45.206231, 9.015038]).addTo(horeca);
     
-    var vragen = new L.LayerGroup();
-    L.marker([45.342898, 8.880618]).addTo(Bruggen).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
+    L.marker([45.342898, 8.880618]).addTo(impressies).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
 //__________________________________________________________________________________________________________________  
                                         //Popups: 
@@ -273,7 +268,7 @@ function onEachFeature(feature, layer) {
 
 function yourOnEachFeature(feature, layer){
     if (feature.properties.name) {
-        layer.bindPopup(feature.properties.name + '<br>' + '<a target="_blank" href="https://www.lakelugano.ch//en">Ferry</a>' + '<br>' + '<div> <img style="width:50px"src="images/veerboot.jpg" /> </div>');
+        layer.bindPopup(feature.properties.name + '<br>' + feature.properties.omschrijvi + '<br>' + feature.properties.website + '<br>' + '<br>' +  feature.properties.url_image);
     }
 }
 
@@ -287,8 +282,29 @@ var trainIcon = L.icon({
 });
  
 //Gevaarlijke brug
-var gevaar = L.icon ({
+var gevaarIcoon = L.icon ({
         iconUrl: 'images/gevaar.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Scenery
+var cameraIcoon = L.icon ({
+        iconUrl: 'images/Camera.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Eat & Sleep
+var horecaIcoon = L.icon ({
+        iconUrl: 'images/.png',
+        iconSize: [25, 25],
+        iconAnchor: [12,12]
+     });
+
+//Navigation Details
+var opmerkingenIcoon = L.icon ({
+        iconUrl: 'images/voetstap.png',
         iconSize: [25, 25],
         iconAnchor: [12,12]
      });

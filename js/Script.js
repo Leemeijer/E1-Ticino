@@ -61,6 +61,15 @@ var
                             });
                         }, onEachFeature: yourOnEachFeature
                 });
+
+    opmerkingen = L.geoJson(null, {
+                pointToLayer: function(feature, latlng){
+                    return L.marker(latlng, {
+                        icon: opmerkingenIcoon
+                        })
+                    }, onEachFeature: footstepOnEachFeature
+            });
+
 //__________________________________________________________________________________________________________________      
                                         //Esri basemap toevoegen:
 
@@ -81,7 +90,8 @@ var Imagery = L.esri.basemapLayer('Imagery');
 //Points of Interest:
     jQuery.getJSON("GeoJson/POI_stations_langs_route.geojson", function (data) { Stations.addData(data)}),
     jQuery.getJSON("GeoJson/POI_brug_voor_voetgangers.geojson", function (data) { Bruggen.addData(data)}),
-    jQuery.getJSON("GeoJson/POI_pont_en_trein.geojson", function (data) { FerryFunicular.addData(data)});
+    jQuery.getJSON("GeoJson/POI_pont_en_trein.geojson", function (data) { FerryFunicular.addData(data)}),
+    jQuery.getJSON("GeoJson/POI_scenery.geojson", function (data) { opmerkingen.addData(data)});
 
 //__________________________________________________________________________________________________________________      
                                         //Maken van de kaart:
@@ -170,7 +180,7 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
                     groupName: "Tourist Info",
                     expanded: true,
                     layers: {
-            "Scenery"                   : impressies,
+            "Scenery"                   : opmerkingen,
             "Eat & sleep"               : horeca
             
             }
@@ -269,6 +279,12 @@ function onEachFeature(feature, layer) {
 function yourOnEachFeature(feature, layer){
     if (feature.properties.name) {
         layer.bindPopup(feature.properties.name + '<br>' + feature.properties.omschrijvi + '<br>' + feature.properties.website + '<br>' + '<br>' +  feature.properties.url_image);
+    }
+}
+
+function footstepOnEachFeature(feature, layer){
+    if (feature.properties.name) {
+        layer.bindPopup(feature.properties.name + '<br>' + feature.properties.omschrijvi);
     }
 }
 

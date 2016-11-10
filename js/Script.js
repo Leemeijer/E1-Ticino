@@ -59,7 +59,7 @@ var
                             radius: 5, 
                             fillOpacity: 0.85
                             });
-                        }, onEachFeature: yourOnEachFeature
+                        }, onEachFeature: ferryOnEachFeature
                 });
 
     opmerkingen = L.geoJson(null, {
@@ -111,12 +111,11 @@ L.control.locate({position: 'bottomright'}).addTo(map);
                                         //Markers
     var impressies = new L.LayerGroup();
     L.marker([45.465526, 8.885021]).addTo(impressies).bindPopup('<b>Magenta</b> <div> <img style="width:80px" src="images/Magenta.png" /></div>');
+    L.marker([45.342898, 8.880618]).addTo(impressies).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
 
     var horeca = new L.LayerGroup();
     L.marker([45.206231, 9.015038]).addTo(horeca);
     
-    L.marker([45.342898, 8.880618]).addTo(impressies).bindPopup('<b>Gevaarlijke brug</b><br> Brug bij SP494 nabij Vigevano</br> <div> <img style="width:150px" src="images/brug.jpg" /></div>');
-
 //__________________________________________________________________________________________________________________  
                                         //Popups: 
 //Vernoem je variabele en zet er '.bindPopup' achter om de popup te maken. Alles tussen de haakjes () is wat je te zien krijgt.
@@ -128,7 +127,6 @@ ViaF.bindPopup('<b>Site:</b> <br> <a target="_blank" href="http://www.dewegvande
 Aanbevolen.bindPopup('Recommended bij BosmaGrafiek.nl for a part of the pilgrimage from the St. Gottthard pass to Roma')
 Swiss02.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-02.html">Trans Swiss Trail</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>')
 Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.ch/en/routes/route-07.html">Via Gottardo</a> <br> <b>App:</b> Search for <i>Switzerland Mobility</i>');
-
 
 
 //__________________________________________________________________________________________________________________  
@@ -194,7 +192,6 @@ Swiss07.bindPopup('<b>Site:</b> <a target="_blank" href="http://www.wanderland.c
 //opmerking: Alles wat je in deze Layer Control wilt hebben moet je boven deze functie plaatsen anders gaat het mis.
 
 
-
 //__________________________________________________________________________________________________________________ 
                                         //Titel 
 
@@ -213,7 +210,7 @@ titel.addTo(map);
 var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
+    var div = L.DomUtil.create('div');
     div.innerHTML = '<div> <img style="width:46%; height:50%"src="images/Legenda.png" /> </div>';
    return div;
 };
@@ -276,7 +273,8 @@ function onEachFeature(feature, layer) {
     })
 }
 
-function yourOnEachFeature(feature, layer){
+//functies voor de POI's:
+function ferryOnEachFeature(feature, layer){
     if (feature.properties.name) {
         layer.bindPopup(feature.properties.name + '<br>' + feature.properties.omschrijvi + '<br>' + feature.properties.website + '<br>' + '<br>' +  feature.properties.url_image);
     }
